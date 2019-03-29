@@ -2,6 +2,7 @@ package com.example.android.vegancarttest;
 
 import android.animation.AnimatorInflater;
 import android.animation.StateListAnimator;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -10,6 +11,8 @@ import android.widget.Toast;
 
 public class Choice extends AppCompatActivity {
 
+    private int vegFlag=0;
+    private int grocFlag=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,18 +24,30 @@ public class Choice extends AppCompatActivity {
         veggiesCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Veg and Fruits", Toast.LENGTH_LONG);
-                toast.show();
+                if(vegFlag==0){
+                    veggiesCardView.setCardElevation(40F);
+                    vegFlag=1;
+                }
+                else{
+                    veggiesCardView.setCardElevation(8F);
+                    vegFlag=0;
+                }
             }
         });
 
-        final CardView groceryCardView = (CardView) findViewById(R.id.groceryCard);
+        final CardView groceryCardView = (CardView) findViewById(R.id.grocery_card_view);
         groceryCardView.setStateListAnimator(anim);
         groceryCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Groceries", Toast.LENGTH_LONG);
-                toast.show();
+                if(grocFlag==0){
+                    groceryCardView.setCardElevation(40F);
+                    grocFlag=1;
+                }
+                else{
+                    groceryCardView.setCardElevation(8F);
+                    grocFlag=0;
+                }
             }
         });
     }

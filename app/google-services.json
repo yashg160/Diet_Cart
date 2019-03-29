@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "88112173134",
+    "firebase_url": "https://vegancarttest.firebaseio.com",
+    "project_id": "vegancarttest",
+    "storage_bucket": "vegancarttest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:88112173134:android:9ff8c96b10b679b0",
+        "android_client_info": {
+          "package_name": "com.example.android.vegancarttest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "88112173134-p8il7o8spn55i7hoposqr2k0arj0ut73.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android.vegancarttest",
+            "certificate_hash": "5a894daba29e3bbd2e0f217ce1e640ceb55dde1c"
+          }
+        },
+        {
+          "client_id": "88112173134-fhvakh02a4vkko6lv95k1hf3v3lcqvjq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7fDAojTk4GQIs09w7lRE7qN8ScwsHZCs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "88112173134-fhvakh02a4vkko6lv95k1hf3v3lcqvjq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

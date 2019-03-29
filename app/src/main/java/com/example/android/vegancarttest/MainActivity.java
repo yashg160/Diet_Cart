@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity implements Intro.OnFragmentInteractionListener, IntroFaq.OnFragmentInteractionListener, RetailerSell.OnFragmentInteractionListener{
 
     @Override
@@ -31,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements Intro.OnFragmentI
         proceedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), Choice.class);
+                Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(i);
             }
         });
@@ -41,4 +43,5 @@ public class MainActivity extends AppCompatActivity implements Intro.OnFragmentI
     public void onFragmentInteraction(Uri uri) {
 
     }
+
 }
