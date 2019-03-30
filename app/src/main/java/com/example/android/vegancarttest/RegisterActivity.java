@@ -59,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.i(TAG, "signInWithCredential:success");
                             timeTextView.setVisibility(View.GONE);
-                            startActivity(new Intent(RegisterActivity.this, MapsActivity.class));
+                            startActivity(new Intent(RegisterActivity.this, Choice.class));
                             FirebaseUser user = task.getResult().getUser();
                             // ...
                         } else {

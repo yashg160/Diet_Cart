@@ -2,53 +2,68 @@ package com.example.android.vegancarttest;
 
 import android.animation.AnimatorInflater;
 import android.animation.StateListAnimator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 public class Choice extends AppCompatActivity {
 
-    private int vegFlag=0;
-    private int grocFlag=0;
+    private CheckBox fruitsCheck;
+    private CheckBox vegetablesCheck;
+    private int isFruitsFlag;
+    private int isVegetablesFlag;
+    private Button proceedButtonChoice;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choice);
-        StateListAnimator anim = AnimatorInflater.loadStateListAnimator(getApplicationContext(), R.animator.lift_on_touch);
+
+        fruitsCheck = (CheckBox) findViewById(R.id.fruits_check_box);
+        vegetablesCheck = (CheckBox) findViewById(R.id.vegetables_check_box);
+
+        final CardView fruitsCardView = (CardView) findViewById(R.id.fruits_card_view);
+
+        fruitsCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fruitsCheck.toggle();
+                if(isFruitsFlag == 1) isFruitsFlag = 0;
+                else isFruitsFlag = 1;
+            }
+        });
 
         final CardView veggiesCardView = (CardView) findViewById(R.id.veggies_card_view);
-        veggiesCardView.setStateListAnimator(anim);
         veggiesCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(vegFlag==0){
-                    veggiesCardView.setCardElevation(40F);
-                    vegFlag=1;
+                vegetablesCheck.toggle();
+                if(isVegetablesFlag == 1) isVegetablesFlag = 0;
+                else isVegetablesFlag = 1;
+            }
+        });
+
+        proceedButtonChoice = findViewById(R.id.proceed_button_choice);
+        proceedButtonChoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isFruitsFlag==0 && isVegetablesFlag==0){
+                    Toast.makeText(getApplicationContext(), "Please select at least one option", Toast.LENGTH_LONG).show();
                 }
-                else{
-                    veggiesCardView.setCardElevation(8F);
-                    vegFlag=0;
+                else {
+                    startActivity(new Intent(Choice.this, DistributionActivity.class).setFlags(isFruitsFlag).setFlags(isVegetablesFlag));
+
                 }
             }
         });
 
-        final CardView groceryCardView = (CardView) findViewById(R.id.grocery_card_view);
-        groceryCardView.setStateListAnimator(anim);
-        groceryCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(grocFlag==0){
-                    groceryCardView.setCardElevation(40F);
-                    grocFlag=1;
-                }
-                else{
-                    groceryCardView.setCardElevation(8F);
-                    grocFlag=0;
-                }
-            }
-        });
+
+
     }
 }
