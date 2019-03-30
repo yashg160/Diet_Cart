@@ -3,6 +3,7 @@ package com.example.android.vegancarttest;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.CountDownTimer;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -39,15 +40,13 @@ import java.util.concurrent.TimeUnit;
 public class RegisterActivity extends AppCompatActivity {
 
     private String mPhoneNumber;
-    private String mPassword;
     private EditText phoneNumberEdit;
-    private EditText passwordEdit;
-    private TextView mSignInTextView;
     private Button mRegisterButton;
     private String TAG = "Phone verification";
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private TextView timeTextView;
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         //TODO: Use for signing in existing users. Start the main maps activity.
@@ -59,6 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.i(TAG, "signInWithCredential:success");
+                            timeTextView.setVisibility(View.GONE);
                             startActivity(new Intent(RegisterActivity.this, MapsActivity.class));
                             FirebaseUser user = task.getResult().getUser();
                             // ...
@@ -83,8 +83,6 @@ public class RegisterActivity extends AppCompatActivity {
             if(credential==null){ Log.i(TAG, "Phone verification-Null credential");}
             else{ Log.i(TAG, "Phone verification-non null credential");}
 
-
-
         }
 
         @Override
@@ -103,11 +101,8 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onCodeSent(String verificationId,
-                PhoneAuthProvider.ForceResendingToken token) {
-            // The SMS verification code has been sent to the provided phone number, we
-            // now need to ask the user to enter the code and then construct a credential
-            // by combining the code with a verification ID.
+        public void onCodeSent(String verificationId, PhoneAuthProvider.ForceResendingToken token) {
+
             Log.i(TAG, "onCodeSent:" + verificationId);
             Toast.makeText(getApplicationContext(), "Code sent", Toast.LENGTH_LONG).show();
             // Save verification ID and resending token so we can use them later
@@ -134,21 +129,27 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         phoneNumberEdit = findViewById(R.id.phone_number_edit);
-        passwordEdit = findViewById(R.id.password_edit);
+        timeTextView = findViewById(R.id.time_text_view);
 
         mRegisterButton = findViewById(R.id.register_button);
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                new CountDownTimer(30000, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+                        timeTextView.setText(String.format("00 : "+Long.toString(millisUntilFinished/1000)));
+                    }
+
+                    public void onFinish() {
+                        timeTextView.setText("done!");
+                    }
+                }.start();
                 try {
                     mPhoneNumber = "+91" + phoneNumberEdit.getText().toString();
-                    mPassword = passwordEdit.getText().toString();
 
                     if(mPhoneNumber.length() != 13){
                         Toast.makeText(getApplicationContext(), "Invalid phone number", Toast.LENGTH_LONG).show();
-                    }
-                    else if(mPassword.length() <= 7){
-                        Toast.makeText(getApplicationContext(), "Please choose a longer password", Toast.LENGTH_LONG).show();
                     }
                     else{
 

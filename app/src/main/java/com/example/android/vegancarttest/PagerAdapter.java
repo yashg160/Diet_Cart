@@ -18,8 +18,6 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 return new Intro();
             case 1:
                 return new IntroFaq();
-            case 2:
-                return new RetailerSell();
             default:
                 return null;
         }

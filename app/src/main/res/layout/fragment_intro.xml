@@ -29,7 +29,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
-        android:text="Made for Retailers"
+        android:text="Made for Retailers and Customers"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,11 +44,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
-        android:text="India's Biggest Online platform for Retailers to Buy Fresh Fruits and Grocery"
+        android:text="India's Biggest Online platform to Buy Fresh Fruits and Vegetables"
         android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_tag_tv" />
+
+
 
 </android.support.constraint.ConstraintLayout>

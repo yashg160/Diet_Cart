@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,9 +24,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private String locationProvider = LocationManager.GPS_PROVIDER;
-    private String TAG = "Location Listener";
+    private String TAG = "LocationABC";
     private Location mLocation;
-    private int MY_PERMISSIONS_REQUEST_READ_CONTACTS;
 
     LocationListener locationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
@@ -58,7 +58,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -72,11 +71,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         try {
             if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-                Log.i(TAG, "Location Access no granted");
+                Log.i(TAG, "Location Access not granted");
             }
-            else{
-                locationManager.requestLocationUpdates(locationProvider, 0, 0, locationListener);
-            }
+            locationManager.requestLocationUpdates(locationProvider, 0, 0, locationListener);
         } catch (SecurityException e) {
             Log.i(TAG, "SecurityException thrown", e);
         }
@@ -85,6 +82,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LatLng curLocation = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
             mMap.addMarker(new MarkerOptions().position(curLocation).title("Current Location"));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(curLocation));
+        }
+        else{
+            Log.i(TAG, "mLocation is null");
         }
 
     }
