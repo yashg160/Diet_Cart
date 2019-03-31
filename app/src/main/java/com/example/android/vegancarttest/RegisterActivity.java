@@ -1,6 +1,7 @@
 package com.example.android.vegancarttest;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.CountDownTimer;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,10 +48,9 @@ public class RegisterActivity extends AppCompatActivity {
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private TextView timeTextView;
+    private ProgressBar progressBar;
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-        //TODO: Use for signing in existing users. Start the main maps activity.
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -58,8 +59,12 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.i(TAG, "signInWithCredential:success");
-                            timeTextView.setVisibility(View.GONE);
-                            startActivity(new Intent(RegisterActivity.this, Choice.class));
+
+                            Intent intent = new Intent(RegisterActivity.this, Choice.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            progressBar.setVisibility(View.INVISIBLE);
+                            startActivity(intent);
                             FirebaseUser user = task.getResult().getUser();
                             // ...
                         } else {
@@ -97,7 +102,6 @@ public class RegisterActivity extends AppCompatActivity {
             else{
                 Toast.makeText(getApplicationContext(), "Verification failed. Check the internet connection", Toast.LENGTH_LONG).show();
             }
-
         }
 
         @Override
@@ -108,8 +112,6 @@ public class RegisterActivity extends AppCompatActivity {
             // Save verification ID and resending token so we can use them later
             mVerificationId = verificationId;
             mResendToken = token;
-
-            //TODO:Put a progress bar.
         }
     };
 
@@ -129,22 +131,13 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         phoneNumberEdit = findViewById(R.id.phone_number_edit);
-        timeTextView = findViewById(R.id.time_text_view);
-
+        progressBar = findViewById(R.id.progress_bar);
         mRegisterButton = findViewById(R.id.register_button);
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new CountDownTimer(30000, 1000) {
 
-                    public void onTick(long millisUntilFinished) {
-                        timeTextView.setText(String.format("00 : "+Long.toString(millisUntilFinished/1000)));
-                    }
-
-                    public void onFinish() {
-                        timeTextView.setText("done!");
-                    }
-                }.start();
+                progressBar.setVisibility(View.VISIBLE);
                 try {
                     mPhoneNumber = "+91" + phoneNumberEdit.getText().toString();
 
